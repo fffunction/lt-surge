@@ -1,6 +1,6 @@
 {
   "name": "lt-surge",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A collection of connect middleware to mimic to Harp/Surge serving behaviour",
   "repository": "https://github.com/fffunction/lt-surge",
   "main": "index.js",

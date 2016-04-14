@@ -268,11 +268,11 @@ exports.basicAuth = function(req, rsp, next) {
 
 exports.all = function (projectPath) {
     return [
-        middleware.regProjectFinder(projectPath),
-        middleware.setup,
-        middleware.underscore,
-        middleware.mwl,
-        middleware.static,
-        middleware.fallback,
+        exports.regProjectFinder(projectPath),
+        exports.setup,
+        exports.underscore,
+        exports.mwl,
+        exports.static,
+        exports.fallback,
     ]
 }
