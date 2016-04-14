@@ -1,0 +1,12 @@
+{
+  "name": "lt-surge",
+  "version": "1.0.0",
+  "description": "A collection of connect middleware to mimic to Harp/Surge serving behaviour",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Dan Reeves <danr@fffunction.co>",
+  "license": "MIT"
+}
