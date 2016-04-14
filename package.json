@@ -2,6 +2,7 @@
   "name": "lt-surge",
   "version": "1.0.0",
   "description": "A collection of connect middleware to mimic to Harp/Surge serving behaviour",
+  "repository": "https://github.com/fffunction/lt-surge",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
