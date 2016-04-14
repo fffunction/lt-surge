@@ -9,5 +9,13 @@
   },
   "keywords": [],
   "author": "Dan Reeves <danr@fffunction.co>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "connect": "3.4.1",
+    "escape-html": "1.0.3",
+    "mime": "1.3.4",
+    "parseurl": "1.3.1",
+    "pause": "0.1.0",
+    "send": "0.13.2"
+  }
 }
