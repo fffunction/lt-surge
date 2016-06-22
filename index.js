@@ -1,6 +1,12 @@
 var path            = require('path')
 var fs              = require('fs')
 var mime            = require('mime')
+var connect         = require('connect')
+var send            = require('send')
+var utilsPause      = require('pause')
+var utilsEscape     = require('escape-html')
+var parse           = require('parseurl')
+var url             = require('url')
 var skin = function(req, rsp, stack, callback){
   var that  = this
   var index = 0
@@ -34,12 +40,88 @@ var processors = {
   "css" : ["styl", "less", "scss", "sass"],
   "js"  : ["coffee"]
 }
-var connect         = require('connect')
-var send            = require('send')
-var utilsPause      = require('pause')
-var utilsEscape     = require('escape-html')
-var parse           = require('parseurl')
-var url             = require('url')
+var normalizeUrl = function(url){
+
+  // take off query string
+  var base = unescape(url.split('?')[0])
+
+  /**
+   * Normalize Path
+   *
+   * Note: This converts unix paths to windows path on windows
+   * (not sure if this is a good thing)
+   */
+  var file_path = path.normalize(base)
+
+  // index.html support
+  if (path.sep == file_path[file_path.length - 1]) file_path += 'index.html'
+
+  return file_path
+}
+var buildPriorityList = exports.buildPriorityList = function(filePath){
+
+  var list = []
+
+  /**
+   * get extension
+   */
+
+  var ext       = path.extname(filePath).replace(/^\./, '')
+  var processor = processors[ext]
+
+  if(processor){
+
+    // foo.html => foo.jade
+    processor.forEach(function(p){
+      var regexp = new RegExp(ext + '$')
+      list.push(filePath.replace(regexp, p))
+    })
+
+    // foo.html => foo.html.jade
+    processor.forEach(function(p){
+      list.push(filePath + '.' + p)
+    })
+
+  }else{
+    // assume template when unknown processor
+    if(processors['html'].indexOf(ext) !== -1){
+      list.push(filePath)
+    }else{
+      // foo.xml => foo.xml.jade
+      processors['html'].forEach(function(p){
+        list.push(filePath + '.' + p)
+      })
+    }
+  }
+
+  // remove leading and trailing slashes
+  var list = list.map(function(item){ return item.replace(/^\/|^\\|\/$/g, '') })
+
+  return list
+}
+var findFirstFile = exports.findFirstFile = function(dir, arr) {
+  var dirPath   = path.dirname(path.join(dir, arr[0]))
+  var fullPath  = path.resolve(dirPath)
+
+  try{
+    var list = fs.readdirSync(fullPath)
+  }catch(e){
+    var list = []
+  }
+
+  var first = null
+
+  if(list){
+    arr.reverse().map(function(item){
+      var fileName = path.basename(item)
+      if(list.indexOf(fileName) !== -1){
+        first = item
+      }
+    })
+  }
+
+  return first
+}
 
 exports.regProjectFinder = function(projectPath){
   return function(req, rsp, next){
@@ -266,6 +348,43 @@ exports.basicAuth = function(req, rsp, next) {
   })(req, rsp, next)
 }
 
+exports.process = function(req, rsp, next){
+  var normalizedPath  = normalizeUrl(req.url)
+  var priorityList    = buildPriorityList(normalizedPath)
+  var sourceFile      = findFirstFile(req.setup.publicPath, priorityList)
+
+
+  /**
+   * We GTFO if we don't have a source file.
+   */
+
+  if(!sourceFile){
+    if (path.basename(normalizedPath) === "index.html") {
+      var pathAr = normalizedPath.split(path.sep); pathAr.pop() // Pop index.html off the list
+      var prospectCleanPath       = pathAr.join("/")
+      var prospectNormalizedPath  = normalizeUrl(prospectCleanPath)
+      var prospectPriorityList    = buildPriorityList(prospectNormalizedPath)
+      prospectPriorityList.push(path.basename(prospectNormalizedPath + ".html"))
+
+      sourceFile = findFirstFile(req.setup.publicPath, prospectPriorityList)
+
+      if (!sourceFile) {
+        return next()
+      } else {
+        // 301 redirect
+        rsp.statusCode = 301
+        rsp.setHeader('Location', prospectCleanPath)
+        rsp.end('Redirecting to ' + utilsEscape(prospectCleanPath))
+      }
+
+    } else {
+      return next()
+    }
+  } else {
+    return next()
+  }
+}
+
 exports.all = function (projectPath) {
     return [
         exports.regProjectFinder(projectPath),
@@ -273,6 +392,7 @@ exports.all = function (projectPath) {
         exports.underscore,
         exports.mwl,
         exports.static,
+        exports.process,
         exports.fallback,
     ]
 }
