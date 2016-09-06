@@ -5,7 +5,7 @@
   "repository": "https://github.com/fffunction/lt-surge",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava"
   },
   "keywords": [],
   "author": "Dan Reeves <danr@fffunction.co>",
