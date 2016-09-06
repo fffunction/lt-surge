@@ -1,63 +1,18 @@
-var path            = require('path')
-var fs              = require('fs')
-var mime            = require('mime')
-var connect         = require('connect')
-var send            = require('send')
-var utilsPause      = require('pause')
-var utilsEscape     = require('escape-html')
-var parse           = require('parseurl')
-var url             = require('url')
-var skin = function(req, rsp, stack, callback){
-  var that  = this
-  var index = 0
+var path         = require('path')
+var fs           = require('fs')
+var mime         = require('mime')
+var connect      = require('connect')
+var send         = require('send')
+var utilsPause   = require('pause')
+var utilsEscape  = require('escape-html')
+var parse        = require('parseurl')
+var url          = require('url')
 
-  function next(err){
-    var layer = stack[index++]
-    if(!layer) return callback(req, rsp, next)
-    layer.call(that, req, rsp, next)
-  }
+var skin         = require('./lib/skin');
+var shouldIgnore = require('./lib/shouldIgnore');
+var processors   = require('./lib/processors');
+var normalizeUrl = require('./lib/normalizeUrl');
 
-  next()
-};
-var shouldIgnore = function(filePath){
-
-  // remove starting and trailing slashed
-  filePath = filePath.replace(/^\/|\/$/g, '')
-
-  // create array out of path
-  var arr = filePath.split(path.sep)
-
-  // test for starting underscore, .git, .gitignore
-  var map = arr.map(function(item){
-    return item[0] === "_" || item.indexOf(".git") === 0
-  })
-
-  // return if any item starts with underscore
-  return map.indexOf(true) !== -1
-}
-var processors = {
-  "html": ["jade", "ejs", "md"],
-  "css" : ["styl", "less", "scss", "sass"],
-  "js"  : ["coffee"]
-}
-var normalizeUrl = function(url){
-
-  // take off query string
-  var base = unescape(url.split('?')[0])
-
-  /**
-   * Normalize Path
-   *
-   * Note: This converts unix paths to windows path on windows
-   * (not sure if this is a good thing)
-   */
-  var file_path = path.normalize(base)
-
-  // index.html support
-  if (path.sep == file_path[file_path.length - 1]) file_path += 'index.html'
-
-  return file_path
-}
 var buildPriorityList = exports.buildPriorityList = function(filePath){
 
   var list = []
