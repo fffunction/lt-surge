@@ -22,7 +22,7 @@
     "ava": "0.16.0",
     "connect": "3.4.1",
     "get-port": "2.1.0",
-    "node-fetch": "1.6.0"
+    "node-fetch": "1.6.1"
   },
   "eslintConfig": {
     "extends": "airbnb",
