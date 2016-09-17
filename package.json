@@ -28,34 +28,5 @@
     "eslint-plugin-react": "6.2.2",
     "get-port": "2.1.0",
     "node-fetch": "1.6.1"
-  },
-  "eslintConfig": {
-    "extends": "airbnb",
-    "rules": {
-      "no-var": 0,
-      "vars-on-top": 0,
-      "prefer-arrow-callback": 0,
-      "no-param-reassign": 0,
-      "prefer-template": 0,
-      "no-prototype-builtins": 0,
-      "semi": [
-        1,
-        "always"
-      ],
-      "indent": [
-        1,
-        4
-      ],
-      "space-before-function-paren": [
-        1,
-        {
-          "anonymous": "always",
-          "named": "always"
-        }
-      ],
-      "no-console": 0,
-      "padded-blocks": 0,
-      "no-empty": 0
-    }
   }
 }
