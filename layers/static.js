@@ -48,7 +48,7 @@ module.exports = function staticFiles (req, res, next) {
 
         send(req, pathn, {
             maxage: options.maxAge || 0,
-            root: req.setup.publicPath,
+            root: req.surge.publicPath,
             hidden: options.hidden,
         })
         .on('error', error)

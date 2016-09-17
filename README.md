@@ -11,7 +11,6 @@ var projectDir = 'path/to/project';
 // browser-sync example
 middleware: [
     middleware.regProjectFinder(projectDir),
-    middleware.setup,
     middleware.underscore,
     middleware.mwl,
     middleware.static,
@@ -24,7 +23,6 @@ middleware: middleware.all(projectDir),
 // connect example
 var app = connect()
 app.use(middleware.regProjectFinder(projectDir))
-app.use(middleware.setup)
 app.use(middleware.underscore)
 app.use(middleware.mwl)
 app.use(middleware.static)

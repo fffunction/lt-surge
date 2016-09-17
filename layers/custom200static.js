@@ -11,7 +11,7 @@ var mime = require('mime');
  */
 
 module.exports = function custom200static (req, rsp, next) {
-    fs.readFile(path.resolve(req.setup.publicPath, '200.html'), function get200html (err, contents) {
+    fs.readFile(path.resolve(req.surge.publicPath, '200.html'), function get200html (err, contents) {
         if (contents) {
             var body = contents.toString();
             var type = mime.lookup('html');
