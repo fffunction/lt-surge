@@ -13,7 +13,7 @@ var mime = require('mime');
  */
 
 module.exports = function custom404static (req, rsp, next) {
-    fs.readFile(path.resolve(req.setup.publicPath, '404.html'), function get404html (err, contents) {
+    fs.readFile(path.resolve(req.surge.publicPath, '404.html'), function get404html (err, contents) {
         if (contents) {
             var body = contents.toString();
             var type = mime.lookup('html');

@@ -7,7 +7,11 @@
   "scripts": {
     "test": "ava"
   },
-  "keywords": [],
+  "keywords": [
+    "local",
+    "surge",
+    "server"
+  ],
   "author": "Dan Reeves <danr@fffunction.co>",
   "license": "MIT",
   "dependencies": {

@@ -4,7 +4,6 @@ import middleware from '../index';
 
 const expected = [
     'regProjectFinder',
-    'setup',
     'underscore',
     'mwl',
     'static',
@@ -14,7 +13,6 @@ const expected = [
 
 const expectedAll = [
     'projectFinder',
-    'setup',
     'underscore',
     'mwl',
     'staticFiles',
