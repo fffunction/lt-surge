@@ -9,19 +9,14 @@ var parse        = require('parseurl')
 var url          = require('url')
 
 var skin         = require('./lib/skin');
-var shouldIgnore = require('./lib/shouldIgnore');
+var shouldIgnore = require('./lib/shouldignore');
 var processors   = require('./lib/processors');
-var normalizeUrl = require('./lib/normalizeUrl');
-var buildPriorityList = require('./lib/buildPriorityList');
-var findFirstFile = require('./lib/findFirstFile');
+var normalizeUrl = require('./lib/normalizeurl');
+var buildPriorityList = require('./lib/buildprioritylist');
+var findFirstFile = require('./lib/findfirstfile');
 
-
-exports.regProjectFinder = function(projectPath){
-  return function(req, rsp, next){
-    req.projectPath = projectPath
-    next()
-  }
-}
+var regProjectFinder = require('./layers/regprojectfinder');
+exports.regProjectFinder = regProjectFinder;
 
 /**
  * Fallbacks
