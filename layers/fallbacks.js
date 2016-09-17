@@ -18,12 +18,12 @@ var default404 = require('./default404');
  *
  */
 
-function notFound (req, rsp, next){
-  skin(req, rsp, [custom404static, default404], next)
+function notFound (req, rsp, next) {
+    skin(req, rsp, [custom404static, default404], next);
 }
 
-function fallback (req, rsp, next){
-  skin(req, rsp, [custom200static, notFound], next)
+function fallback (req, rsp, next) {
+    skin(req, rsp, [custom200static, notFound], next);
 }
 
 exports.notFound = notFound;

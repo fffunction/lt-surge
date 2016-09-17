@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var mime = require('mime');
+
 /**
  * Custom 200
  *
@@ -8,18 +9,19 @@ var mime = require('mime');
  *  2. compile and return 200.xxx file
  *
  */
-module.exports = function custom200static (req, rsp, next){
-  fs.readFile(path.resolve(req.setup.publicPath, "200.html"), function(err, contents){
-    if(contents){
-      var body    = contents.toString()
-      var type    = mime.lookup('html')
-      var charset = mime.charsets.lookup(type)
-      rsp.setHeader('Content-Type', type + (charset ? '; charset=' + charset : ''))
-      rsp.setHeader('Content-Length', Buffer.byteLength(body, charset));
-      rsp.statusCode = 200
-      rsp.end(body)
-    }else{
-      next()
-    }
-  })
-}
+
+module.exports = function custom200static (req, rsp, next) {
+    fs.readFile(path.resolve(req.setup.publicPath, '200.html'), function get200html (err, contents) {
+        if (contents) {
+            var body = contents.toString();
+            var type = mime.lookup('html');
+            var charset = mime.charsets.lookup(type);
+            rsp.setHeader('Content-Type', type + (charset ? '; charset=' + charset : ''));
+            rsp.setHeader('Content-Length', Buffer.byteLength(body, charset));
+            rsp.statusCode = 200;
+            rsp.end(body);
+        } else {
+            next();
+        }
+    });
+};
