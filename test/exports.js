@@ -29,7 +29,6 @@ test('module has correct exports', (t) => {
     expected.forEach((m) => {
         t.truthy(exported.indexOf(m) > -1, `${m} is exported`);
     });
-
 });
 
 test('module.all has correct exports', (t) => {
@@ -40,6 +39,4 @@ test('module.all has correct exports', (t) => {
     expectedAll.forEach((m) => {
         t.truthy(exported.indexOf(m) > -1, `${m} is exported`);
     });
-
-
 });
