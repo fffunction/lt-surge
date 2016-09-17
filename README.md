@@ -2,6 +2,8 @@
 
 A collection of connect middleware to mimic to Harp/Surge serving behaviour, shamelessly ripped from [Harp](https://github.com/sintaxi/harp)
 
+[![Build Status](https://travis-ci.org/fffunction/lt-surge.svg?branch=master)](https://travis-ci.org/fffunction/lt-surge) [![Coverage Status](https://coveralls.io/repos/github/fffunction/lt-surge/badge.svg)](https://coveralls.io/github/fffunction/lt-surge)
+
 ## Usage
 
 ```js
