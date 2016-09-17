@@ -12,71 +12,9 @@ var skin         = require('./lib/skin');
 var shouldIgnore = require('./lib/shouldIgnore');
 var processors   = require('./lib/processors');
 var normalizeUrl = require('./lib/normalizeUrl');
+var buildPriorityList = require('./lib/buildPriorityList');
+var findFirstFile = require('./lib/findFirstFile');
 
-var buildPriorityList = exports.buildPriorityList = function(filePath){
-
-  var list = []
-
-  /**
-   * get extension
-   */
-
-  var ext       = path.extname(filePath).replace(/^\./, '')
-  var processor = processors[ext]
-
-  if(processor){
-
-    // foo.html => foo.jade
-    processor.forEach(function(p){
-      var regexp = new RegExp(ext + '$')
-      list.push(filePath.replace(regexp, p))
-    })
-
-    // foo.html => foo.html.jade
-    processor.forEach(function(p){
-      list.push(filePath + '.' + p)
-    })
-
-  }else{
-    // assume template when unknown processor
-    if(processors['html'].indexOf(ext) !== -1){
-      list.push(filePath)
-    }else{
-      // foo.xml => foo.xml.jade
-      processors['html'].forEach(function(p){
-        list.push(filePath + '.' + p)
-      })
-    }
-  }
-
-  // remove leading and trailing slashes
-  var list = list.map(function(item){ return item.replace(/^\/|^\\|\/$/g, '') })
-
-  return list
-}
-var findFirstFile = exports.findFirstFile = function(dir, arr) {
-  var dirPath   = path.dirname(path.join(dir, arr[0]))
-  var fullPath  = path.resolve(dirPath)
-
-  try{
-    var list = fs.readdirSync(fullPath)
-  }catch(e){
-    var list = []
-  }
-
-  var first = null
-
-  if(list){
-    arr.reverse().map(function(item){
-      var fileName = path.basename(item)
-      if(list.indexOf(fileName) !== -1){
-        first = item
-      }
-    })
-  }
-
-  return first
-}
 
 exports.regProjectFinder = function(projectPath){
   return function(req, rsp, next){
