@@ -26,6 +26,7 @@
     "eslint-plugin-import": "1.15.0",
     "eslint-plugin-jsx-a11y": "2.2.2",
     "eslint-plugin-react": "6.2.2",
+    "fn-name": "2.0.1",
     "get-port": "2.1.0",
     "node-fetch": "1.6.1"
   }
