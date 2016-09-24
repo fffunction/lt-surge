@@ -7,7 +7,7 @@ var mime = require('mime');
  *
  */
 
-module.exports = function default404 (req, rsp, next) {
+module.exports = function default404 (req, rsp) {
     var body = 'Page Not Found';
     var type = mime.lookup('html');
     var charset = mime.charsets.lookup(type);

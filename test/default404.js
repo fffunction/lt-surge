@@ -5,26 +5,30 @@ import startServer from './helpers';
 const projectDir = './fixtures/default404';
 let s;
 
-test.before(async t => {
-    s = await startServer(projectDir);
+test.before(() => {
+    return startServer(projectDir)
+        .then((server) => {
+            s = server;
+            return server;
+        });
 });
 
-test.after(t => {
+test.after(() => {
     s.server.close();
 });
 
-test(`root returns default 404`, t => {
+test('root returns default 404', (t) => {
     return fetch(`http://localhost:${s.port}`)
-    .then((res) => res.text())
+    .then(res => res.text())
     .then((body) => {
-        t.is(body, `Page Not Found`);
+        t.is(body, 'Page Not Found');
     });
 });
 
-test(`unknown path returns default 404`, t => {
+test('unknown path returns default 404', (t) => {
     return fetch(`http://localhost:${s.port}/unknown`)
-    .then((res) => res.text())
+    .then(res => res.text())
     .then((body) => {
-        t.is(body, `Page Not Found`);
+        t.is(body, 'Page Not Found');
     });
 });

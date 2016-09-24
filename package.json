@@ -5,7 +5,7 @@
   "repository": "https://github.com/fffunction/lt-surge",
   "main": "index.js",
   "scripts": {
-    "test": "nyc ava",
+    "test": "eslint . && nyc ava",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [
