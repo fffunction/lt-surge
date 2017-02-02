@@ -2,7 +2,7 @@ import test from 'ava';
 import fetch from 'node-fetch';
 import startServer from './helpers';
 
-const projectDir = './fixtures/custom200static';
+const projectDir = 'test/fixtures/custom200static';
 let s;
 
 test.before(() => {

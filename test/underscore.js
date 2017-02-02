@@ -2,7 +2,7 @@ import test from 'ava';
 import fetch from 'node-fetch';
 import startServer from './helpers';
 
-const projectDir = './fixtures/underscore';
+const projectDir = 'test/fixtures/underscore';
 let s;
 
 test.before(() => {

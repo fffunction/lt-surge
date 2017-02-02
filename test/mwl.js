@@ -2,7 +2,7 @@ import test from 'ava';
 import fetch from 'node-fetch';
 import startServer from './helpers';
 
-const projectDir = './fixtures/mwl';
+const projectDir = 'test/fixtures/mwl';
 let s;
 
 test.before(() => {
