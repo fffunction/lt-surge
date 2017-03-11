@@ -33,7 +33,7 @@
     "eslint-plugin-jsx-a11y": "2.2.3",
     "eslint-plugin-react": "6.10.0",
     "fn-name": "2.0.1",
-    "get-port": "2.1.0",
+    "get-port": "3.0.0",
     "node-fetch": "1.6.3",
     "nyc": "10.1.2"
   }
