@@ -10,7 +10,7 @@ exports.mwl = mwl;
 exports.static = staticFiles;
 exports.fallback = fallbacks.fallback;
 
-exports.all = function all (projectPath) {
+exports.all = function all(projectPath) {
     return [
         regProjectFinder(projectPath),
         underscore,

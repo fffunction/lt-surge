@@ -8,7 +8,7 @@ var notFound = require('./fallbacks').notFound;
  *
  */
 
-module.exports = function underscore (req, rsp, next) {
+module.exports = function underscore(req, rsp, next) {
     if (shouldIgnore(req.url)) {
         notFound(req, rsp, next);
     } else {

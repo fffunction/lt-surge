@@ -1,9 +1,9 @@
 var path = require('path');
+var url = require('url');
 var parse = require('parseurl');
 var utilsPause = require('pause');
 var send = require('send');
 var utilsEscape = require('escape-html');
-var url = require('url');
 
 /**
  * Static
@@ -12,7 +12,7 @@ var url = require('url');
  *
  */
 
-module.exports = function staticFiles (req, res, next) {
+module.exports = function staticFiles(req, res, next) {
     var options = {};
     var redirect = true;
 
@@ -20,14 +20,13 @@ module.exports = function staticFiles (req, res, next) {
     var pathname = parse(req).pathname;
     var pause = utilsPause(req);
 
-    function serve (pathn) {
-
-        function resume () {
+    function serve(pathn) {
+        function resume() {
             next();
             pause.resume();
         }
 
-        function directory () {
+        function directory() {
             if (!redirect) return resume();
             var dirpath = url.parse(req.originalUrl).pathname;
             res.statusCode = 301;
@@ -36,9 +35,9 @@ module.exports = function staticFiles (req, res, next) {
             return undefined;
         }
 
-        function error (err) {
+        function error(err) {
             if (err.status === 404) {
-                // look for implicit `*.html` if we get a 404
+                // Look for implicit `*.html` if we get a 404
                 return path.extname(err.path) === ''
                     ? serve(pathn + '.html')
                     : resume();
@@ -51,9 +50,9 @@ module.exports = function staticFiles (req, res, next) {
             root: req.surge.publicPath,
             hidden: options.hidden,
         })
-        .on('error', error)
-        .on('directory', directory)
-        .pipe(res);
+            .on('error', error)
+            .on('directory', directory)
+            .pipe(res);
     }
 
     return serve(pathname);

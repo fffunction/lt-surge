@@ -5,8 +5,19 @@
   "repository": "https://github.com/fffunction/lt-surge",
   "main": "index.js",
   "scripts": {
-    "test": "eslint . && nyc ava",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "test": "xo && nyc ava",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "prettier": "prettier --single-quote --trailing-comma=es5 --bracket-spacing --tab-width 4 --write ./index.js `find ./test -name '*.js'` `find ./lib -name '*.js'` `find ./layers -name '*.js'`"
+  },
+  "xo": {
+    "extends": "prettier",
+    "rules": {
+      "no-var": 0,
+      "ava/prefer-async-await": 0,
+      "prefer-arrow-callback": 0,
+      "func-names": 0,
+      "object-shorthand": 0
+    }
   },
   "keywords": [
     "local",
@@ -24,17 +35,15 @@
     "send": "0.15.3"
   },
   "devDependencies": {
-    "ava": "^0.18.0",
+    "ava": "^0.20.0",
     "connect": "3.6.0",
     "coveralls": "2.11.16",
-    "eslint": "3.10.2",
-    "eslint-config-airbnb": "12.0.0",
-    "eslint-plugin-import": "1.16.0",
-    "eslint-plugin-jsx-a11y": "2.2.3",
-    "eslint-plugin-react": "6.10.0",
+    "eslint-config-prettier": "^2.2.0",
     "fn-name": "2.0.1",
     "get-port": "3.0.0",
     "node-fetch": "1.6.3",
-    "nyc": "10.1.2"
+    "nyc": "^11.0.3",
+    "prettier": "^1.5.2",
+    "xo": "^0.18.2"
   }
 }
