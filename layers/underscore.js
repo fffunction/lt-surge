@@ -1,4 +1,4 @@
-var shouldIgnore = require('../lib/shouldignore');
+var shouldIgnore = require('../lib/should-ignore');
 var notFound = require('./fallbacks').notFound;
 
 /**
