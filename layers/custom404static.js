@@ -8,22 +8,24 @@ var mime = require('mime');
  *  1. return static 404.html file
  *  2. compile and return 404.xxx file
  *
- * TODO: cache readFile IO
- *
  */
 
-module.exports = function custom404static (req, rsp, next) {
-    fs.readFile(path.resolve(req.surge.publicPath, '404.html'), function get404html (err, contents) {
-        if (contents) {
+module.exports = function custom404static(req, rsp, next) {
+    fs.readFile(
+        path.resolve(req.surge.publicPath, '404.html'),
+        function get404html(err, contents) {
+            if (err || !contents) return next();
+
             var body = contents.toString();
             var type = mime.lookup('html');
             var charset = mime.charsets.lookup(type);
-            rsp.setHeader('Content-Type', type + (charset ? '; charset=' + charset : ''));
+            rsp.setHeader(
+                'Content-Type',
+                type + (charset ? '; charset=' + charset : '')
+            );
             rsp.setHeader('Content-Length', Buffer.byteLength(body, charset));
             rsp.statusCode = 404;
             rsp.end(body);
-        } else {
-            next();
         }
-    });
+    );
 };

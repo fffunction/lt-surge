@@ -19,22 +19,30 @@ const expectedAll = [
     'fallback',
 ];
 
-test('module has correct exports', (t) => {
+test('module has correct exports', t => {
     const exported = Object.keys(middleware);
 
-    t.is(exported.length, expected.length, 'the right number of modules are exported');
+    t.is(
+        exported.length,
+        expected.length,
+        'the right number of modules are exported'
+    );
 
-    expected.forEach((m) => {
-        t.truthy(exported.indexOf(m) > -1, `${m} is exported`);
+    expected.forEach(m => {
+        t.true(exported.indexOf(m) > -1, `${m} is exported`);
     });
 });
 
-test('module.all has correct exports', (t) => {
+test('module.all has correct exports', t => {
     const exported = middleware.all().map(m => fnName(m));
 
-    t.is(exported.length, expectedAll.length, 'the right number of modules are exported');
+    t.is(
+        exported.length,
+        expectedAll.length,
+        'the right number of modules are exported'
+    );
 
-    expectedAll.forEach((m) => {
-        t.truthy(exported.indexOf(m) > -1, `${m} is exported`);
+    expectedAll.forEach(m => {
+        t.true(exported.indexOf(m) > -1, `${m} is exported`);
     });
 });
